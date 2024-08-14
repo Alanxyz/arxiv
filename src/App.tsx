@@ -1,48 +1,33 @@
 import * as React from "react"
-import { useEffect } from "react"
 import {
   ChakraProvider,
-  Box,
-  Text,
-  Link,
-  VStack,
-  Code,
-  Grid,
-  theme,
 } from "@chakra-ui/react"
-import { ColorModeSwitcher } from "./ColorModeSwitcher"
-import { Logo } from "./Logo"
-import { fetchArticles } from "./rss"
+import { MathJaxContext } from "better-react-mathjax"
+import { Home } from "./Home"
+import { theme } from "./theme"
 
 export const App = () => {
-  
-  useEffect(() => {
-    const articles = fetchArticles()
-    console.log(articles)
-  }, [])
 
+  const mathjaxConfig = {
+    "fast-preview": {
+      disabled: true
+    },
+    tex2jax: {
+      inlineMath: [
+        ["$", "$"],
+      ],
+      displayMath: [
+        ["$$", "$$"],
+      ]
+    },
+    messageStyle: "none"
+  };
+  
   return (
     <ChakraProvider theme={theme}>
-      <Box textAlign="center" fontSize="xl">
-        <Grid minH="100vh" p={3}>
-          <ColorModeSwitcher justifySelf="flex-end" />
-          <VStack spacing={8}>
-            <Logo h="40vmin" pointerEvents="none" />
-            <Text>
-              Edit <Code fontSize="xl">src/App.tsx</Code> and save to reload.
-            </Text>
-            <Link
-              color="teal.500"
-              href="https://chakra-ui.com"
-              fontSize="2xl"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Learn Chakra
-            </Link>
-          </VStack>
-        </Grid>
-      </Box>
+      <MathJaxContext config={mathjaxConfig}>
+        <Home />
+      </MathJaxContext>
     </ChakraProvider>
   )
 }
