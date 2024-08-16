@@ -6,6 +6,7 @@ import { fetchArticles } from "./rss"
 import {
   Box,
   Text,
+  Link,
   Heading,
   Container
 } from "@chakra-ui/react"
@@ -31,7 +32,7 @@ export const Home: React.FC = (props) => {
   return (
     <Box>
       <Box>
-        <Heading size="3xl">ARXIV</Heading>
+        <Heading size="3xl">ARXIV READER</Heading>
       </Box>
 
       <Box
@@ -48,24 +49,30 @@ export const Home: React.FC = (props) => {
           {
             articles.map((article) => (
               <>
-                <Heading
-                  size="md"
-                  fontStyle="italic"
-                  borderTop="double"
-                  borderBottom="solid"
-                  borderWidth="5px 0 2px 0"
-                  p="4"
-                >
-                  <MathJax>
-                    {article.title}
-                  </MathJax>
-                </Heading>
+                <Link href={article.link} isExternal>
+                  <Heading
+                    size="md"
+                    fontStyle="italic"
+                    borderTop="double"
+                    borderBottom="solid"
+                    borderWidth="5px 0 2px 0"
+                    p="4"
+                  >
+                    <MathJax>
+                      {article.title}
+                    </MathJax>
+                  </Heading>
+                </Link>
 
-                <Text fontSize="xs" textAlign="center">{article.published}</Text>
+                <Text fontSize="sm" textAlign="center" fontStyle="italic">{article.author}</Text>
+
+                <br />
 
                 <Text>
                   <MathJax>
                     {article.summary}
+
+                    <Link color="cyan.800" href={article.link} isExternal>Read complete</Link>
                   </MathJax>
                 </Text>
               </>
